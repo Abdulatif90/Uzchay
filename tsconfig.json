@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "ES2020",               // JavaScript versiyasi
+      "module": "CommonJS",           // Modul tizimi
+      "strict": true,                 // Qattiq tekshiruv rejimi
+      "esModuleInterop": true,        // ES modullar bilan interoperabillik
+      "forceConsistentCasingInFileNames": true,  // Fayl nomlari katta-kichik harf farqiga sezgir
+      "skipLibCheck": true,           // Kutubxona fayllarini tekshirishni o'tkazib yuborish
+      "outDir": "./dist",             // Kompilyatsiya qilingan fayllar joylashadigan papka
+      "baseUrl": "./",
+      "rootDir": "./src",             // Manba kodlari papkasi
+      "resolveJsonModule": true,      // JSON fayllarni modullar sifatida yuklashga ruxsat
+      "sourceMap": true,              // Sourcemap yaratish
+      "moduleResolution": "node",     // Node moduli rezolyutsiyasi
+      "paths": {
+        "*":["node_modules/*"]
+      }
+    },
+    "include": ["src/**/*.ts"],          // Qaysi fayllarni kompilyatsiya qilish kerakligi
+    "exclude": ["node_modules"]       // Kompilyatsiya qilinmaydigan fayllar
+  }
+  
