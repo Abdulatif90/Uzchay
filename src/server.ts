@@ -1,3 +1,8 @@
+// architectural pattern : MVC- molule view controller, DI , MVP - molule view presenter
+
+// Disign pattern : Middleware, Decoter  - bu malum bir qismigina decor berish
+
+
 console.log("EXECUTED");
 
 import moment from "moment";
