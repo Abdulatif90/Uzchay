@@ -4,15 +4,16 @@
   "description": "this is burak backend project ",
   "main": "src/server.ts",
   "scripts": {
-  "start": "ts-node src/server.ts",                        
-  "start:dev": "nodemon --exec ts-node src/server.ts",      
-  "build": "tsc",      
-  "train":"nodemon train.ts",
-  "test": "echo \"Error: no test specified\" && exit 1"
-},
+    "start": "ts-node src/server.ts",
+    "start:dev": "nodemon --exec ts-node src/server.ts",
+    "build": "tsc",
+    "train": "nodemon train.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "author": "Abdulatif",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.0",
     "moment": "^2.30.1"
   },
   "devDependencies": {
