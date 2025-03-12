@@ -1,15 +1,35 @@
-// Task - F
+// Task -H 
 
-function getReverse(a: string): boolean {
-    if (a.length === [...new Set(a)].length) {
-      return false;  
-    } else {
-      return true;   
+
+function getPositive(numbers: number[]){
+  const a: number[] = [];  
+  numbers.forEach((number: number) => {
+    if (number > 0) {
+      a.push(number);  
     }
-  }
+  });
+  return a.join('');
+}
+
+const numbers: number[] = [1, -2, 3, -4, 5];  
+const result: string = getPositive(numbers);  
+console.log(result);  
+
+
+
+
+// // Task - F
+
+// function getReverse(a: string): boolean {
+//     if (a.length === [...new Set(a)].length) {
+//       return false;  
+//     } else {
+//       return true;   
+//     }
+//   }
   
-  console.log(getReverse("asdfasgsa"));  
-    console.log(getReverse("abcdef"));   
+//   console.log(getReverse("asdfasgsa"));  
+//     console.log(getReverse("abcdef"));   
   
 
 
@@ -35,3 +55,5 @@ function getReverse(a: string): boolean {
 //   findMaxIndex([10, 2, '30', 4, 7]);  
 //   findMaxIndex(['asdasda2']); 
 //   findMaxIndex([10, 2, 30, 4, 30, 44]);
+
+
