@@ -11,9 +11,9 @@ function getPositive(numbers: number[]){
   return a.join('');
 }
 
-const numbers: number[] = [1, -2, 3, -4, 5];  
+const numbers: number[] = [1, -4, 2];  
 const result: string = getPositive(numbers);  
-console.log(result);  
+console.log(result);  // natija ["12"]
 
 
 
