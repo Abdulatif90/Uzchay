@@ -23,7 +23,7 @@ function majorityElement(arr: number[]): number[] {
 }
 
 
-let arr: number[] = [1, 3, 5, 5, 1, 3]; 
+let arr: number[] = [1, 2, 3, 4, 5, 4, 3, 4]; 
 let mostFrequent = majorityElement(arr);
 
 console.log(`Eng ko'p uchragan elementlar: ${mostFrequent}`);
