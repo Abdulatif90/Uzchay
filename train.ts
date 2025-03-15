@@ -1,19 +1,49 @@
-// Task -H 
 
+function majorityElement(arr: number[]): number[] {  
+  let newArray = [...new Set(arr)];
+  let result: { [key: number]: number } = {};
+  let values: number[], maxCount: number;
+  let mostFrequentElements: number[] = [];
 
-function getPositive(numbers: number[]){
-  const a: number[] = [];  
-  numbers.forEach((number: number) => {
-    if (number > 0) {
-      a.push(number);  
-    }
+  newArray.forEach(e => {
+      result[e] = arr.filter(i => i === e).length;
   });
-  return a.join('');
+
+  values = Object.values(result);
+  maxCount = Math.max(...values);
+
+  for (let key in result) {
+      if (result[key] === maxCount) {
+          mostFrequentElements.push(parseInt(key));
+      }
+  }
+
+  return mostFrequentElements;  
 }
 
-const numbers: number[] = [1, -2, 3, -4, 5];  
-const result: string = getPositive(numbers);  
-console.log(result);  
+
+let arr: number[] = [1, 3, 5, 5, 1, 3]; 
+let mostFrequent = majorityElement(arr);
+
+console.log(`Eng ko'p uchragan elementlar: ${mostFrequent}`);
+
+
+
+// Task -H 
+
+// function getPositive(numbers: number[]){
+//   const a: number[] = [];  
+//   numbers.forEach((number: number) => {
+//     if (number > 0) {
+//       a.push(number);  
+//     }
+//   });
+//   return a.join('');
+// }
+
+// const numbers: number[] = [1, -2, 3, -4, 5];  
+// const result: string = getPositive(numbers);  
+// console.log(result);  
 
 
 
