@@ -1,3 +1,4 @@
+// task I
 
 function majorityElement(arr: number[]): number[] {  
   let newArray = [...new Set(arr)];
