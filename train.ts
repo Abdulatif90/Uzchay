@@ -1,32 +1,45 @@
-// task I
-
-function majorityElement(arr: number[]): number[] {  
-  let newArray = [...new Set(arr)];
-  let result: { [key: number]: number } = {};
-  let values: number[], maxCount: number;
-  let mostFrequentElements: number[] = [];
-
-  newArray.forEach(e => {
-      result[e] = arr.filter(i => i === e).length;
-  });
-
-  values = Object.values(result);
-  maxCount = Math.max(...values);
-
-  for (let key in result) {
-      if (result[key] === maxCount) {
-          mostFrequentElements.push(parseInt(key));
-      }
+// task J
+function findLongestWord(x: string): string[] {
+    const words = x.split(' '); 
+    console.log(words);
+  
+    const maxLength = Math.max(...words.map(word => word.length)); 
+    const longestWords = words.filter(word => word.length === maxLength);   
+    return longestWords; 
   }
+  console.log(findLongestWord("I come from Uzbekistan")); // Uzbekistan
+  
 
-  return mostFrequentElements;  
-}
+
+// // task I
+
+// function majorityElement(arr: number[]): number[] {  
+//   let newArray = [...new Set(arr)];
+//   let result: { [key: number]: number } = {};
+//   let values: number[], maxCount: number;
+//   let mostFrequentElements: number[] = [];
+
+//   newArray.forEach(e => {
+//       result[e] = arr.filter(i => i === e).length;
+//   });
+
+//   values = Object.values(result);
+//   maxCount = Math.max(...values);
+
+//   for (let key in result) {
+//       if (result[key] === maxCount) {
+//           mostFrequentElements.push(parseInt(key));
+//       }
+//   }
+
+//   return mostFrequentElements;  
+// }
 
 
-let arr: number[] = [1, 2, 3, 4, 5, 4, 3, 4]; 
-let mostFrequent = majorityElement(arr);
+// let arr: number[] = [1, 2, 3, 4, 5, 4, 3, 4]; 
+// let mostFrequent = majorityElement(arr);
 
-console.log(`Eng ko'p uchragan elementlar: ${mostFrequent}`);
+// console.log(`Eng ko'p uchragan elementlar: ${mostFrequent}`);
 
 
 
