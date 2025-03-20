@@ -1,13 +1,26 @@
-// task J
-function findLongestWord(x: string): string[] {
-    const words = x.split(' '); 
-    console.log(words);
+function getDigits(a: string): string {
+    let result = '';  // Yangi stringni boshlaymiz
+    for (let i = 0; i < a.length; i++) {
+        if (!isNaN(Number(a[i])) ) {  // Sonni tekshiradi
+            result += a[i];  // Sonni stringga qo'shamiz
+        }
+    }
+    return result;
+}
+
+console.log(getDigits("m14i1t"));
+
+
+// // task J
+// function findLongestWord(x: string): string[] {
+//     const words = x.split(' '); 
+//     console.log(words);
   
-    const maxLength = Math.max(...words.map(word => word.length)); 
-    const longestWords = words.filter(word => word.length === maxLength);   
-    return longestWords; 
-  }
-  console.log(findLongestWord("I come from Uzbekistan")); // Uzbekistan
+//     const maxLength = Math.max(...words.map(word => word.length)); 
+//     const longestWords = words.filter(word => word.length === maxLength);   
+//     return longestWords; 
+//   }
+//   console.log(findLongestWord("I come from Uzbekistan")); // Uzbekistan
   
 
 

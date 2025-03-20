@@ -1,9 +1,10 @@
-import { Response, Request} from "express";
-import {T} from "../libs/types/common" ;
+import { Request, Response } from "express";
+import {T} from "../libs/types/common";
 import MemberService from "../models/Member.service";
-import { MemberInput } from "../libs/types/member";
+import { LoginInput, MemberInput } from "../libs/types/member";
 import { MemberType } from "../libs/enums/members.enum";
 
+ 
 const restaurauntController: T = {};
 restaurauntController.goHome = (req: Request, res: Response) => {
   {
@@ -39,11 +40,17 @@ restaurauntController.getLogin = (req: Request, res: Response) => {
     }
   };
 
-  restaurauntController.processLogin = (req: Request, res: Response) => {
+  restaurauntController.processLogin = async(req: Request, res: Response) => {
     {
       try {
         console.log("processLogin");
-        res.send("Process Login")
+        console.log("body:", req.body);
+        const input:LoginInput =req.body;
+
+
+        const memberService = new MemberService();
+        const result = await memberService.processLogin(input)
+        res.send(result)
       } catch (err) {
         console.log("ERROR on processLogin:", err)
       }
@@ -69,4 +76,7 @@ restaurauntController.getLogin = (req: Request, res: Response) => {
       }
     }
 
-  export default restaurauntController;
+
+
+
+export default restaurauntController;
