@@ -1,14 +1,15 @@
+// task H2
 function getDigits(a: string): string {
-    let result = '';  // Yangi stringni boshlaymiz
+    let result = '';  
     for (let i = 0; i < a.length; i++) {
-        if (!isNaN(Number(a[i])) ) {  // Sonni tekshiradi
-            result += a[i];  // Sonni stringga qo'shamiz
+        if (!isNaN(Number(a[i])) ) {
+            result += a[i];  // 
         }
     }
     return result;
 }
 
-console.log(getDigits("m14i1t"));
+console.log(getDigits("m14i1t")); // 141
 
 
 // // task J
