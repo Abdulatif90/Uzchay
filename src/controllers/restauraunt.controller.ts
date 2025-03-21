@@ -1,82 +1,74 @@
-import { Request, Response } from "express";
-import {T} from "../libs/types/common";
-import MemberService from "../models/Member.service";
-import { LoginInput, MemberInput } from "../libs/types/member";
-import { MemberType } from "../libs/enums/members.enum";
+import { Member } from './../libs/types/member';
+// build controllers by objects
+import { Request, Response } from "express"
+import { T } from "../libs/types/common"
+import MemberService from "../models/Member.service"
+import { LoginInput, MemberInput } from "../../src/libs/types/member"
+import { MemberType } from "../libs/enums/members.enum"
 
- 
-const restaurauntController: T = {};
-restaurauntController.goHome = (req: Request, res: Response) => {
-  {
+
+// import MemberService from "../models/member.service" 
+
+const restaurantController: T = {}
+restaurantController.goHome = (req: Request, res: Response ) =>{
     try {
-        console.log("goHome");
-        res.send("Homepage");
-        // send | json | end | render | redirect
+        res.send("Home Page")
     } catch (err) {
-      console.log("ERROR on goHome:", err)
+        console.log("Error, goHome:",err)
     }
-  }
-};
+}
 
-restaurauntController.getLogin = (req: Request, res: Response) => {
-    {
-      try {
-          console.log("getLogin");
-          res.send("Login Page");
-      } catch (err) {
-        console.log("ERROR on getLogin:", err)
-      }
+
+restaurantController.getLogin = (req: Request, res: Response ) =>{
+    try {
+        res.send('Login Page')
+    } catch (err) {
+        console.log("Error, getLogin:",err)
     }
-  };
+}
 
-  restaurauntController.getSignup = (req: Request, res: Response) => {
-    {
-      try {
-        console.log("getSignup");
-        res.send("Signup");
-      } catch (err) {
-        console.log("ERROR on getSignup:", err)
-      }
+restaurantController.getSignup = (req: Request, res: Response ) => {
+    try {
+        res.send('Signup Page')
+    } catch (err) {
+        console.log("Error, Signup:",err)
     }
-  };
-
-  restaurauntController.processLogin = async(req: Request, res: Response) => {
-    {
-      try {
-        console.log("processLogin");
-        console.log("body:", req.body);
-        const input:LoginInput =req.body;
+}
 
 
-        const memberService = new MemberService();
+restaurantController.processLogin = async (req: Request, res: Response ) =>{
+    try {
+        console.log("processLogin")
+        console.log("body:",req.body)
+        const input: LoginInput = req.body
+
+        const memberService = new MemberService()
         const result = await memberService.processLogin(input)
         res.send(result)
-      } catch (err) {
-        console.log("ERROR on processLogin:", err)
-      }
+    } catch (err) {
+        console.log("Error, Login:",err)
+        res.send(err)
     }
-  };
+}
 
-  restaurauntController.processSignup = async (req: Request, res: Response) => {
-  
-      try {
+
+restaurantController.processSignup = async (req: Request, res: Response) => {
+    try {
         console.log("processSignup");
-        console.log("body:", req.body);
 
         const newMember: MemberInput = req.body;
         newMember.memberType = MemberType.RESTARAUNT;
 
         const memberService = new MemberService();
-        const result = await memberService.processSignup(newMember)
+        const result = await memberService.processSignup(newMember);
 
-        res.send(result)
-      } catch (err) {
-        console.log("ERROR on processSignup:", err)
+        res.send(result);
+    } catch (err) {
+        console.log("Error, processSignup:", err);
         res.send(err);
-      }
     }
+}
 
 
-
-
-export default restaurauntController;
+// routerda call qilamiz
+export default restaurantController

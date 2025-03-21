@@ -1,5 +1,5 @@
 {
-  "name": "y",
+  "name": "burak",
   "version": "1.0.0",
   "description": "Thisis burak project backend",
   "main": "src/server.ts",
@@ -10,7 +10,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "train": "nodemon train.ts"
   },
-  "author": "Sherzod_dev",
+  "author": "Abdulatif",
   "license": "ISC",
   "dependencies": {
     "@types/morgan": "^1.9.9",

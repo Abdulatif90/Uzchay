@@ -42,42 +42,43 @@ restaurauntController.getLogin = (req: Request, res: Response) => {
     }
   };
 
-  restaurauntController.processLogin = async(req: Request, res: Response) => {
-    {
-      try {
-        console.log("processLogin");
-        console.log("body:", req.body);
-        const input:LoginInput =req.body;
-
-
-        const memberService = new MemberService();
-        const result = await memberService.processLogin(input)
-        res.send(result)
-      } catch (err) {
-        console.log("ERROR on processLogin:", err)
-      }
-    }
-  };
-
-  restaurauntController.processSignup = async (req: Request, res: Response) => {
-  
-      try {
+  restaurauntController.processSignup = async (req: Request, res: Response)=>{
+    try {
         console.log("processSignup");
+        
         console.log("body:", req.body);
 
         const newMember: MemberInput = req.body;
-        newMember.memberType = MemberType.RESTARAUNT;
+        newMember.memberType = MemberType.RESTARAUNT
 
-        const memberService = new MemberService();
-        const result = await memberService.processSignup(newMember)
-
+        const result = await MemberService.processSignup(newMember)
         res.send(result)
-      } catch (err) {
-        console.log("ERROR on processSignup:", err)
-        res.send(err);
-      }
-    }
 
+    } catch (error) {
+        console.log("Error, processSignup", error);
+        res.send(error)
+        
+    }
+}
+
+restaurauntController.processLogin = async (req: Request, res: Response)=>{
+    try {
+        console.log("processLogin");
+        
+        console.log("body:", req.body);
+
+        const newMember: MemberInput = req.body;
+        newMember.memberType = MemberType.RESTARAUNT
+        
+        const result = await MemberService.processLogin(newMember)
+        res.send(result)
+        
+        
+    } catch (error) {
+        console.log("Error, processLogin", error);
+        res.send(error)
+    }
+}
 
 
 
