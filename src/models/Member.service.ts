@@ -12,7 +12,6 @@ class MemberService {
         this.memberModel = MemberModel;
     }
 
-
     public async signup(input: MemberInput): Promise<Member> {
 
         const salt = await bcrypt.genSalt(10);
@@ -65,7 +64,7 @@ class MemberService {
     public async processSignup(input: MemberInput): Promise<Member> {
 
         const exist = await this.memberModel
-            .findOne({ memberType: MemberType.USER })
+            .findOne({ memberType: MemberType.RESTARAUNT })
             .exec();
         
         if (exist) {
