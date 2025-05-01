@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
-import { MemberInput, LoginInput } from "../libs/types/member";
+import { MemberInput, LoginInput, AdminRequest } from "../libs/types/member";
 import { MemberType } from "../libs/enums/members.enum";
 import MemberService from "../models/Member.service";
 
-
+const memberService = new MemberService();
 
 const restaurantController: { [key: string]: any } = {};
 
@@ -24,8 +24,8 @@ restaurantController.getSignup = (req: Request, res: Response) => {
     res.render("signup");
 };
 
-// Signup (POST)
-restaurantController.processSignup = async (req: Request, res: Response) => {
+    // Signup (POST)
+    restaurantController.processSignup = async (req: AdminRequest, res: Response) => {
     
     try {
         console.log("processSignup - request body:", req);
@@ -34,6 +34,14 @@ restaurantController.processSignup = async (req: Request, res: Response) => {
         newMember.memberType = MemberType.RESTARAUNT;
         const result = await memberService.processSignup(newMember); 
         
+        req.session.member = result; // Save the member data in the session
+        req.session.save((err) => {
+            if (err) {
+                console.error("Session save error:", err);
+                return res.status(500).json({ message: "Session save error" });
+            }
+        });
+        console.log("Session data:", req.session.member); // Log the session data
         res.status(201).json(result);
     } 
     
@@ -47,15 +55,24 @@ restaurantController.processSignup = async (req: Request, res: Response) => {
     }
 };
 
-const memberService = new MemberService();
 
-restaurantController.processLogin = async (req: Request, res: Response) => {
+
+restaurantController.processLogin = async (req: AdminRequest, res: Response) => {
     try {
         console.log("processLogin - request body:", req.body);
 
         const input: LoginInput = req.body;
         const result = await memberService.processLogin(input);
-        res.status(200).json(result);
+        
+        req.session.member = result; // Save the member data in the session
+        req.session.save((err) => {
+            if (err) {
+                console.error("Session save error:", err);
+                return res.status(500).json({ message: "Session save error" });
+            }
+        });
+        console.log("Session data:", req.session.member); // Log the session data
+        res.status(201).json(result);
     } 
     
     catch (err: any) {

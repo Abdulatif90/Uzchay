@@ -5,16 +5,21 @@ import routerAdmin from "./router-admin";
 import morgan from "morgan";
 import { MORGAN_FORMAT } from "./libs/config";
 import session from "express-session";
-import ConnectMongoDB from "connect-mongodb-session";
+import connectMongoDB from "connect-mongodb-session";
   
 const app = express()
 
-const MongoDBStore = ConnectMongoDB(session);
+const MongoDBStore = connectMongoDB(session); // MongoDB ga saqlash uchun
 
 const store = new MongoDBStore({
   uri: String(process.env.MONGO_URL),
-  collection:"sessions",
+  collection:"sessions"
 });
+
+store.on('error', function(error) {
+  console.log(error);
+});
+
 
 
 /** 1-Entrance **/
