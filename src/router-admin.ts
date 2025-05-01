@@ -11,8 +11,8 @@ routerAdmin
   .get("/signup", restaurauntController.getSignup)
   .post("/signup", restaurauntController.processSignup);
 routerAdmin
-  .get("/checkme", restaurauntController.checkAuthSession);
-
+  .get("/checkme", restaurauntController.checkAuthSession)
+  .get("/logout", restaurauntController.logout);
 
 /** Product */
 

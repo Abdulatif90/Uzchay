@@ -85,6 +85,25 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
     }
 }
     
+restaurantController.logout = async (req: AdminRequest, res: Response) => {
+    try {
+        console.log("logout - request body:", req.body);
+    req.session.destroy((err) => {  
+        if (err) {
+            console.error("Session destroy error:", err);
+            return res.status(500).json({ message: "Session destroy error" });
+        }
+        res.status(200).json({ message: "Logout successful" });
+    });
+    } catch (err: any) {    
+        console.error("Error in logout:", err);
+        res.status(err.code || 500).json({
+            code: err.code || 500,
+            message: err.message || "An unexpected error occurred"
+        });
+    }
+}
+
 restaurantController.checkAuthSession = async (
     req: AdminRequest, 
     res: Response)=>{
