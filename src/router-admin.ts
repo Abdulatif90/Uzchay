@@ -10,6 +10,9 @@ routerAdmin
 routerAdmin
   .get("/signup", restaurauntController.getSignup)
   .post("/signup", restaurauntController.processSignup);
+routerAdmin
+  .get("/checkme", restaurauntController.checkAuthSession);
+
 
 /** Product */
 

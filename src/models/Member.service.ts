@@ -36,7 +36,7 @@ class MemberService {
                     { memberNick: input.memberNick },
                     {memberNick: 1, memberPassword: 1, memberType: 1})
                 .exec();
-
+             console.log("processLogin - member:", member);       
             if (!member) {
                 throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_NICK);
             }

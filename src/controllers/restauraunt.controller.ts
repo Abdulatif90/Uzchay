@@ -83,7 +83,23 @@ restaurantController.processLogin = async (req: AdminRequest, res: Response) => 
             message: err.message || "An unexpected error occurred"
         });
     }
-};
+}
+    
+restaurantController.checkAuthSession = async (
+    req: AdminRequest, 
+    res: Response)=>{
+    try {
+        if(req.session?.member) {
+            res.status(201).send(`<script>alert("Hi, welcome to ${req.session.member.memberNick}")</script>`
+            )
+        } else {
+            res.status(401).send({message: "Unauthorized"});
+        }
+    } catch (err) {
+        console.log("Error, processLogin", err);
+        res.send(err)
+    }
+}
 
 
 
