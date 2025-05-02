@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { MemberInput, LoginInput, AdminRequest } from "../libs/types/member";
 import { MemberType } from "../libs/enums/members.enum";
 import MemberService from "../models/Member.service";
@@ -120,6 +120,19 @@ restaurantController.checkAuthSession = async (
     }
 }
 
+
+restaurantController.veryfyRestaurant =  (
+    req: AdminRequest, 
+    res: Response,
+    next: NextFunction
+    )=>{
+     if(req.session?.member?.memberType === MemberType.RESTARAUNT) {
+            req.member = req.session.member; // Assign the member to the request object,
+            next(); // Call the next middleware or route handler
+        } else {
+            res.status(401).send({message: "Unauthorized"});
+        }
+   };
 
 
 export default restaurantController;

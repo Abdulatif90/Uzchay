@@ -6,6 +6,7 @@ import morgan from "morgan";
 import { MORGAN_FORMAT } from "./libs/config";
 import session from "express-session";
 import connectMongoDB from "connect-mongodb-session";
+import { T } from "./libs/types/common";
   
 const app = express()
 
@@ -42,6 +43,12 @@ app.use(
     })    
 );
 
+app.use((req, res, next) => {
+  console.log("Session data:", req.session); // Log the session data
+  const sessionData = req.session as T ; // req.session ni T ga o'zgartirish
+  res.locals.member = sessionData.member; // res.locals ga sessionData ni o'zgartirish
+  next();
+});
 /** 3-Views **/
 app.set("views", path.join(__dirname, "views"))
 app.set("view engine", "ejs");
