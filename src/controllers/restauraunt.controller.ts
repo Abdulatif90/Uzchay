@@ -17,11 +17,11 @@ restaurantController.goHome = (req: Request, res: Response) => {
 };
 
 restaurantController.getLogin = (req: Request, res: Response) => {
-    res.render("login");
+    res.redirect("/admin/login");
 };
 
 restaurantController.getSignup = (req: Request, res: Response) => {
-    res.render("signup");
+    res.redirect("/admin/signup");
 };
 
     // Signup (POST)
