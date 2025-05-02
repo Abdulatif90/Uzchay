@@ -37,6 +37,7 @@ productController.updateProduct = async (req: Request, res: Response) => {
 productController.createProduct = async (req: Request, res: Response) => {
     try{
         console.log('createProduct', req.body);
+        res.send("uploading is successfully done")
     }catch(err){
         console.log('createProduct error', err);
         if (err instanceof Errors) {
