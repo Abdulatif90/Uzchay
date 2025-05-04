@@ -22,15 +22,31 @@ import {
     
     
 
-export interface ProductInput{
-    productStatus?: ProductStatus,
-    productCollection : ProductCollection,
-    productName: String,
-    productPrice: Number,
-    productLeftCount?: Number,
-    productSize?: ProductSize,
-    productVolume?: Number,
-    productDesc?: String,
-    productImages?: String[],
-    productviews?: Number
-}
+    export interface ProductInput{
+        productStatus?: ProductStatus,
+        productCollection : ProductCollection,
+        productName: String,
+        productPrice: Number,
+        productLeftCount?: Number,
+        productSize?: ProductSize,
+        productVolume?: Number,
+        productDesc?: String,
+        productImages?: String[],
+        productviews?: Number
+    }
+    
+
+    export interface updateProductInput{
+        _id:ObjectId,
+        productStatus?: ProductStatus,
+        productCollection? : ProductCollection,
+        productName?: String,
+        productPrice?: Number,
+        productLeftCount?: Number,
+        productSize?: ProductSize,
+        productVolume?: Number,
+        productDesc?: String,
+        productImages?: String[],
+        productviews?: Number
+    }
+    
