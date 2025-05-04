@@ -110,6 +110,19 @@ restaurantController.logout = async (req: AdminRequest, res: Response) => {
     }
 }
 
+    //** SPA */USERS
+
+restaurantController.getUsers = async (req: Request, res: Response) => {
+    const result = await memberService.getUsers();
+    res.render ("users", {users : result});
+};
+
+// restaurantController.updateChosenUsers = (req: Request, res: Response) => {
+//     const result = await memberService.updateChosenUsers();
+//     res.render ("users", {users : result});
+// };
+
+
 restaurantController.checkAuthSession = async (
     req: AdminRequest, 
     res: Response)=>{
@@ -139,6 +152,9 @@ restaurantController.veryfyRestaurant =  (
             res.status(401).send({message: "Unauthorized"});
         }
    };
+
+
+
 
 
 export default restaurantController;

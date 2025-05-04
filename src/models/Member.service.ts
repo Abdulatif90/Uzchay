@@ -111,8 +111,29 @@ class MemberService {
             throw err;
         }
     }
-};
 
+
+
+//** SPA */
+
+public async getUsers(): Promise<Member[]>{
+     try {
+        
+        const result = (await this.memberModel
+            .find({memberType:MemberType.USER})
+            .lean());
+        
+        if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_FOUND)
+        return result as Member[]
+    }
+    
+    catch (err) { 
+        console.error("Signup Error:", err);
+        throw new Errors(HttpCode.UNAUTHORIZED, Message.USED_NICK_PHONE  );
+    }
+}
+
+};
 
 
 export default MemberService;

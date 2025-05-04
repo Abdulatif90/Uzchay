@@ -36,4 +36,10 @@ routerAdmin
   
      /** User */
 
+  routerAdmin
+  .get('/user/all',
+    restaurauntController.veryfyRestaurant,
+    restaurauntController.getUsers
+  )
+
 export default routerAdmin;
