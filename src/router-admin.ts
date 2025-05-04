@@ -41,5 +41,9 @@ routerAdmin
     restaurauntController.veryfyRestaurant,
     restaurauntController.getUsers
   )
+  .post('/user/edit',
+    restaurauntController.veryfyRestaurant,
+    restaurauntController.updateChosenUser
+  )
 
 export default routerAdmin;
