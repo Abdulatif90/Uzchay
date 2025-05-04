@@ -18,13 +18,24 @@ restaurantController.goHome = (req: Request, res: Response) => {
     }
 };
 
-restaurantController.getLogin = (req: Request, res: Response) => {
-    res.redirect("/admin/login");
+restaurantController.getSignup = (req: Request, res: Response) => {
+    try{
+        res.render('signup');  //home.ejs   
+    }catch(err: any){
+        console.error("Error in goHome:", err);
+        res.status(500).json({ message: "An unexpected error occurred" });
+    }
 };
 
-restaurantController.getSignup = (req: Request, res: Response) => {
-    res.redirect("/admin/signup");
+restaurantController.getLogin = (req: Request, res: Response) => {
+    try{
+        res.render('login');  //home.ejs   
+    }catch(err: any){
+        console.error("Error in goHome:", err);
+        res.status(500).json({ message: "An unexpected error occurred" });
+    }
 };
+
 
     // Signup (POST)
     restaurantController.processSignup = async (req: AdminRequest, res: Response) => {

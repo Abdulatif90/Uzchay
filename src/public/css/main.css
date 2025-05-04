@@ -1,2 +1,8 @@
 /* CSS Document */
-/* Reset some default styles */    
+/* Reset some default styles */    html,
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+  }
