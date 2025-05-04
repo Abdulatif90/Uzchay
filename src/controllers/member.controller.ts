@@ -30,13 +30,11 @@ memberController.login = async (req: Request, res: Response)=>{
         const input: LoginInput = req.body,
         logResult = await memberService.login(input)
         res.json({member:logResult});
-        
-        
     } catch (err) {
         console.log("Error, processLogin", err);
         res.json(err)
     }
-}
+};
 
 
 export default memberController;

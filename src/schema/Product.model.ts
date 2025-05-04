@@ -30,6 +30,12 @@ const productSchema = new Schema (
         required: true,
     },
 
+    productLeftCount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+
     productSize: {
         type: String,
         enum: ProductSize,
@@ -37,18 +43,17 @@ const productSchema = new Schema (
     },
 
     productVolume: {
-        type: String,
+        type: Number,
         enum: ProductVolume,
         default: ProductVolume.ONE
     },
 
     productDesc: {
         type: String, 
-        required : true
     },
 
     productImages: {
-        type: [String],
+        type: [String],  // bu arrray bolganligi uchun shunaqa yoziladi
         default: [],
     },
 
