@@ -2,3 +2,15 @@ node_modules
 dist
 uploads
 .env
+notes.txt
+*.log
+*.env
+*.DS_Store
+*.swp
+.idea
+.vscode
+*.iml
+*.bak
+*.tmp
+*.zip
+*.tar.gz        

@@ -6,15 +6,19 @@ import {LoginInput, Member, MemberInput } from "../libs/types/member";
 import {  MemberType } from "../libs/enums/members.enum";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import bcrypt from "bcryptjs";
+import AuthService from "../models/Auth.service";
+import {token} from "morgan";
 
 const memberService = new MemberService();
+const authService = new AuthService();
 
 const memberController: T = {};
 
   memberController.signup = async (req: Request, res: Response)=>{
     try {
         const input: MemberInput = req.body,
-        result: Member = await memberService.signup(input)
+        result: Member = await memberService.signup(input),
+        token = await authService.createToken(result);
         res.json({member:result});
 
     } catch (err) {
@@ -28,8 +32,9 @@ const memberController: T = {};
 memberController.login = async (req: Request, res: Response)=>{
     try {
         const input: LoginInput = req.body,
-        logResult = await memberService.login(input)
-        res.json({member:logResult});
+        result = await memberService.login(input),
+        token = await authService.createToken(result);
+        res.json({member:result, token});
     } catch (err) {
         console.log("Error, processLogin", err);
         res.json(err)

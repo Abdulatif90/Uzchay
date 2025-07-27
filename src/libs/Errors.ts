@@ -21,6 +21,15 @@ export enum Message {
   WRONG_PASSWORD = "Wrong password, please try again",
   NO_MEMBER_FOUND= "No member found!",
   UNAUTHORIZED_ACCESS = "Unauthorized access!",
+  TOKEN_CREATION_FAILED = "Token creation error!",
+  MEMBER_NOT_FOUND = "Member not found!",
+  MEMBER_ALREADY_EXISTS = "Member already exists!",
+  MEMBER_DELETED = "Member has been deleted!",
+  MEMBER_UPDATED = "Member has been updated successfully!",
+  MEMBER_SIGNUP_SUCCESS = "Member signed up successfully!",
+  MEMBER_LOGIN_SUCCESS = "Member logged in successfully!",
+  MEMBER_LOGOUT_SUCCESS = "Member logged out successfully!",
+  MEMBER_SESSION_SAVED = "Member session saved successfully!",      
     
 }
 
