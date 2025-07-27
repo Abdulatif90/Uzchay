@@ -6,12 +6,21 @@ import {shapeIntoMongooseObjectId} from "../libs/config"
 import bcrypt from "bcryptjs";
 
 class MemberService {
-   
     private readonly memberModel;
-
-    constructor() {
+    constructor(){
         this.memberModel = MemberModel;
     }
+
+public async getRestaurant():Promise <Member>{
+   const result = await this.memberModel.
+   findOne({memberType:MemberType.RESTARAUNT})
+   .lean()
+   .exec();
+   console.log("getRestaurant - result:", result);
+    if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+    return result as Member;
+}
+
 
     public async signup(input: MemberInput): Promise<Member> {
 
