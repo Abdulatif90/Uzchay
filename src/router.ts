@@ -2,6 +2,7 @@ import express from "express";
 const router = express.Router();
 import memberController from "./controllers/member.controller";
 import uploader from "./libs/utilis/uploader";
+import productController from "./controllers/product.controller";
 
 router.get("/member/restaurant", memberController.getRestaurant);
 router.post("/member/login", memberController.login);
@@ -20,6 +21,25 @@ router.post("/member/update",
 );
 
 router.get("/member/top-users", memberController.getTopUsers);
+router.get("/product/all", productController.getProducts);
+router.get("/product", productController.getAllProducts);
+router.post("/product/create", 
+    uploader("products").single("file"),
+    memberController.verifyAuth,
+    productController.createProduct
+);
+router.post("/product/update", 
+    uploader("products").single("file"),
+    memberController.verifyAuth,
+    productController.updateProduct
+);
+router.post("/product/delete",
+    memberController.verifyAuth,
+    productController.deleteProduct
+);  
+
+
+
 router.get("/member/verify-auth", memberController.verifyAuth, (req, res) => {
     res.status(200).json({ message: "Authenticated" });
 });
