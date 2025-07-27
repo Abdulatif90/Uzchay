@@ -22,33 +22,10 @@ router.post("/member/update",
 
 router.get("/member/top-users", memberController.getTopUsers);
 router.get("/product/all", productController.getProducts);
-router.get("/product", productController.getAllProducts);
-router.post("/product/create", 
-    uploader("products").single("file"),
-    memberController.verifyAuth,
-    productController.createProduct
-);
-router.post("/product/update", 
-    uploader("products").single("file"),
-    memberController.verifyAuth,
-    productController.updateProduct
-);
-router.post("/product/delete",
-    memberController.verifyAuth,
-    productController.deleteProduct
-);  
-
-
-
-router.get("/member/verify-auth", memberController.verifyAuth, (req, res) => {
-    res.status(200).json({ message: "Authenticated" });
-});
-router.get("/member/verify-admin", memberController.verifyAdmin, (req, res) => {
-    res.status(200).json({ message: "Admin Access Granted" });
-});
-router.get("/member/verify-user", memberController.verifyUser, (req, res) => {
-    res.status(200).json({ message: "User Access Granted" });
-});
+router.get("/product/:id",
+    memberController.retrieveAuth,
+    productController.getProduct
+)
 
 
 export default router;
