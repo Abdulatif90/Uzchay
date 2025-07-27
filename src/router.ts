@@ -19,4 +19,16 @@ router.post("/member/update",
     memberController.updateMember
 );
 
+router.get("/member/top-users", memberController.getTopUsers);
+router.get("/member/verify-auth", memberController.verifyAuth, (req, res) => {
+    res.status(200).json({ message: "Authenticated" });
+});
+router.get("/member/verify-admin", memberController.verifyAdmin, (req, res) => {
+    res.status(200).json({ message: "Admin Access Granted" });
+});
+router.get("/member/verify-user", memberController.verifyUser, (req, res) => {
+    res.status(200).json({ message: "User Access Granted" });
+});
+
+
 export default router;
