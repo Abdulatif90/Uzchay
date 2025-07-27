@@ -5,7 +5,10 @@ import jwt from "jsonwebtoken";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 
 class AuthService {
-    constructor() {}
+    private readonly secretToken;
+    constructor() {
+        this.secretToken = process.env.SECRET_TOKEN as string
+    }
 
     public async createToken(payload:Member) {
         return new Promise((resolve, reject) => {
@@ -26,6 +29,21 @@ class AuthService {
 
 
         })
+    }
+    public async checkAuth(token: string): Promise<Member> {
+        return new Promise((resolve, reject) => {
+            jwt.verify(
+                token,
+                this.secretToken,
+                (err, decoded) => {
+                    if (err) {
+                        reject(new Errors(HttpCode.UNAUTHORIZED, Message.TOKEN_NOT_VALID));
+                    } else {
+                        resolve(decoded as Member);
+                    }
+                }
+            );
+        });
     }
 }
 
