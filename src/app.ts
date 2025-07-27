@@ -30,7 +30,8 @@ app.use(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(cookieParser());
-app.use(morgan(MORGAN_FORMAT))
+app.use("/uploads", express.static("./uploads"));
+app.use(morgan(MORGAN_FORMAT));
 /** 2-Sessions **/
 
 app.use(
