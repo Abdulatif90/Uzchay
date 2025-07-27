@@ -6,6 +6,9 @@ import {shapeIntoMongooseObjectId} from "../libs/config"
 import bcrypt from "bcryptjs";
 
 class MemberService {
+    static addUserPoint() {
+        throw new Error("Method not implemented.");
+    }
     private readonly memberModel;
     constructor(){
         this.memberModel = MemberModel;
@@ -105,6 +108,28 @@ public async getTopUsers(): Promise<Member[]> {
     if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
         return result as Member[];
 }
+
+public async addUserPoint(member: Member, point: number): Promise<Member> {
+    const memberId = shapeIntoMongooseObjectId(member._id);
+
+    const result = await this.memberModel
+      .findOneAndUpdate(
+        {
+          _id: memberId,
+          memberType: MemberType.USER,
+          memberStatus: MemberStatus.ACTIVE,
+        },
+        { $inc: { memberPoints: point } },
+        { new: true }
+      )
+      .exec();
+
+    if (!result) {
+      throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_FOUND);
+    }
+
+    return result.toObject() as Member;
+  }
 
     public async processSignup(input: MemberInput): Promise<Member> {
 
