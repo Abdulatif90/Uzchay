@@ -45,7 +45,7 @@ productController.createProduct = async (req: AdminRequest, res: Response) => {
     }catch(err){
         console.log('createProduct error', err);
         const message = err instanceof Errors? err.message : Message.SOMETHING_WENT_WRONG;
-        res.status(200).send(`<script>aler('${message}');window.location.replace('/admin/product/all')</script`);
+        res.status(200).send(`<script>alert('${message}');window.location.replace('/admin/signup')</script>`);
     }
 };
 

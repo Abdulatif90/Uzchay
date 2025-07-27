@@ -51,6 +51,7 @@ restaurantController.getLogin = (req: Request, res: Response) => {
         newMember.memberType = MemberType.RESTARAUNT;
         const result = await memberService.processSignup(newMember); 
         
+        // TODO : SESSIONS AUTHENTICATION
         req.session.member = result; // Save the member data in the session
         req.session.save((err) => {
             if (err) {
