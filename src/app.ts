@@ -1,3 +1,6 @@
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config(); // .env faylini o'qish uchun
 import express from "express";
 import path from "path"
 import router from "./router";
@@ -31,6 +34,7 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
+app.use(cors({credentials: true, origin: true})); // CORS ni o'rnatish
 app.use(morgan(MORGAN_FORMAT));
 /** 2-Sessions **/
 

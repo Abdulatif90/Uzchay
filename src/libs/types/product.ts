@@ -17,7 +17,9 @@ import {
         productVolume: Number,
         productDesc?: String,
         productImages: String[],
-        productviews?: Number
+        productviews?: Number,
+        createdAt?: Date,
+        updatedAt?: Date
     }
     
 
