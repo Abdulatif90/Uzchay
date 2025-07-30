@@ -28,12 +28,12 @@ routerAdmin
     restaurauntController.veryfyRestaurant,
     makeUpLoader('products').array('productImages',5),
     productController.createProduct)
-  
-  
+
+
   .post("/product/:id",
     restaurauntController.veryfyRestaurant,
     productController.updateProduct)
-  
+
      /** User */
 
   routerAdmin
@@ -41,6 +41,7 @@ routerAdmin
     restaurauntController.veryfyRestaurant,
     restaurauntController.getUsers
   )
+
   .post('/user/edit',
     restaurauntController.veryfyRestaurant,
     restaurauntController.updateChosenUser

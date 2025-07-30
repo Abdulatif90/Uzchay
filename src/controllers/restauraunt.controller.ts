@@ -41,13 +41,15 @@ restaurantController.getLogin = (req: Request, res: Response) => {
     restaurantController.processSignup = async (req: AdminRequest, res: Response) => {
     
     try {
-        console.log("processSignup - request body:", req);
+        console.log("processSignup - request body:", req.body);
         const file = req.file;
+        console.log("processSignup - file:", file);
+         // Check if file is provided
         if(!file)
-            throw new Errors(HttpCode.BAD_REQUEST,Message.SOMETHING_WENT_WRONG)
+            throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
 
         const newMember: MemberInput = req.body;
-        newMember.memberImage = file?.path
+        newMember.memberImage = file?.path;
         newMember.memberType = MemberType.RESTARAUNT;
         const result = await memberService.processSignup(newMember); 
         
@@ -58,9 +60,9 @@ restaurantController.getLogin = (req: Request, res: Response) => {
                 console.error("Session save error:", err);
                 return res.status(500).json({ message: "Session save error" });
             }
+            console.log("Session data:", req.session.member); // Log the session data
+            res.status(201).redirect("/admin/product/all");
         });
-        console.log("Session data:", req.session.member); // Log the session data
-        res.status(201).redirect("/admin/product/all");
     } 
     
     catch (err: any) {
@@ -125,15 +127,22 @@ restaurantController.logout = async (req: AdminRequest, res: Response) => {
     //** SPA */USERS
 
 restaurantController.getUsers = async (req: Request, res: Response) => {
+  try {
+    console.log("getUsers")
     const result = await memberService.getUsers();
-    res.render ("users", {users : result});
+    res.render("users",{users: result});
+    //user  degan page jonatib users degan objectdi  result olqali pas qilishini sorayyapmiz 
+  }catch (err) {
+    console.log("Error, getUsers:", err);
+    res.redirect("/admin/login");
+  }
 };
 
 restaurantController.updateChosenUser = async (req: Request, res: Response) => {
     try{
-    const result = await memberService.updateChosenUser(req.body)
-    console.log
-    res.status(200).json({data: result})   
+    const result = await memberService.updateChosenUser(req.body);
+    console.log('updateChosenUser result:', result);
+    res.status(200).json({data: result});   
      }
     catch(err){
         console.log('err in updateUser ', err)

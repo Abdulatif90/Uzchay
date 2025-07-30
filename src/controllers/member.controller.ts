@@ -2,7 +2,7 @@
 import {NextFunction, Request, Response, response, request } from "express";
 import {T} from "../libs/types/common";
 import MemberService from "../models/Member.service";
-import {LoginInput, Member, MemberInput, ExtendedRequest } from "../libs/types/member";
+import {LoginInput, Member, MemberInput, ExtendedRequest, UpdateMemberInput } from "../libs/types/member";
 import {  MemberType } from "../libs/enums/members.enum";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import bcrypt from "bcryptjs";
@@ -107,6 +107,27 @@ memberController.updateMember = async (req: ExtendedRequest, res:Response ) => {
         console.log("Error, updateMember:", err);
         if( err instanceof Errors) res.status(err.code).json(err);
         else res.status(Errors.standart.code).json(Errors.standart)
+    }
+};
+
+memberController.uploadMemberImage = async (req: ExtendedRequest, res: Response) => {
+    try {
+        console.log("uploadMemberImage");
+        if (!req.file) {
+            throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
+        }
+        
+        const input: UpdateMemberInput = {
+            _id: req.member._id,
+            memberImage: req.file.path.replace(/\\/g, "/")
+        };
+        
+        const result = await memberService.updateChosenUser(input);
+        res.status(HttpCode.OK).json(result);
+    } catch (err) {
+        console.log("Error, uploadMemberImage:", err);
+        if (err instanceof Errors) res.status(err.code).json(err);
+        else res.status(Errors.standart.code).json(Errors.standart);
     }
 };
 
