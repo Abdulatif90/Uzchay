@@ -36,57 +36,73 @@ class ProductService {
          ? {[inquiry.order] : 1}
          : {[inquiry.order] : -1};
 
+         // Ensure page and limit are valid numbers
+         const page = Math.max(1, inquiry.page || 1);
+         const limit = Math.max(1, inquiry.limit || 8);
+
          const result = await this.productModel.aggregate([
             {$match: match},
             {$sort: sort},
-            {$skip: (inquiry.page * 1 - 1) * inquiry.limit},
-            {$limit: inquiry.limit * 1},
+            {$skip: (page - 1) * limit},
+            {$limit: limit},
          ])
          .exec();
 
-         if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-
-         return result;
+         return result || [];
 
     }
 
       public async getProduct(memberId: ObjectId | null, id: string):Promise<Product>{
-        const productId = shapeIntoMongooseObjectId(id);
-        
-        let result  = await this.productModel.findOne({
-            _id : productId,
-            productStatus: ProductStatus.PROCESS,
-        })
-        .exec();
-
-        if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-
-        if(memberId) {
-            //Check existence
-            const input: ViewInput = {
-                memberId: memberId,
-                viewRefId: productId,
-                viewGroup : ViewGroup.PRODUCT
-            };
-            const existView = await this.viewService.checkViewExistence(input);
+        try {
+            const productId = shapeIntoMongooseObjectId(id);
             
-            console.log("exist:", !!existView)
-            if(!existView) {
-                // Insert View
-                console.log("planning to insert new view")
-                await this.viewService.insertMemberView(input);
-
-                // Increase Counts
-                result = await this.productModel.findByIdAndUpdate(
-                    productId,
-                    { $inc: { productViews: +1 }},
-                    { new: true }
-                )
+            // First, let's check if the product exists with any status
+            const anyProduct = await this.productModel.findById(productId).exec();
+            if (anyProduct) {
+                // console.log("ProductService.getProduct - Product status:", anyProduct.productStatus);
             }
-        }
+            
+            let result  = await this.productModel.findOne({
+                _id : productId,
+                productStatus: ProductStatus.PROCESS,
+            })
+            .exec();
 
-        if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-        return result.toObject() as Product;
+            if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+
+            if(memberId) {
+                //Check existence
+                const input: ViewInput = {
+                    memberId: memberId,
+                    viewRefId: productId,
+                    viewGroup : ViewGroup.PRODUCT
+                };
+                
+                const existView = await this.viewService.checkViewExistence(input);
+                
+                if(!existView) {
+                    // Insert View
+                    await this.viewService.insertMemberView(input);
+
+                    // Increase Counts
+                    result = await this.productModel.findByIdAndUpdate(
+                        productId,
+                        { $inc: { productViews: +1 }},
+                        { new: true }
+                    );
+                }
+            }
+
+            if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
+            return result.toObject() as Product;
+        } catch (err) {
+            console.error("Error in getProduct:", err);
+            if (err instanceof Errors) {
+                throw err;
+            }
+            // If it's a MongoDB ObjectId error or other error
+            throw new Errors(HttpCode.BAD_REQUEST, Message.NO_DATA_FOUND);
+        }
     }
 
      //**BSSR  */  
@@ -95,15 +111,14 @@ class ProductService {
         const result =  await this.productModel
         .find()
         .exec();
-        if(!result) throw new Errors(HttpCode.NOT_FOUND,Message.NO_DATA_FOUND)
         
-    return result.map((doc) => doc.toObject())
+        return result.map((doc) => doc.toObject())
        
     }
 
     public async createProduct (input: ProductInput):Promise<Product>{
         try{
-            return (await this.productModel.create(input)).toObject()
+            return (await this.productModel.create(input)).toObject() as Product
            
         }
         catch(err){

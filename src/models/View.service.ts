@@ -9,14 +9,12 @@ class ViewService {
     this.viewModel = ViewModel;
   }
 
-  public async checkViewExistence(input: ViewInput): Promise<View> {
+  public async checkViewExistence(input: ViewInput): Promise<View | null> {
     const result = await this.viewModel
       .findOne({ memberId: input.memberId, viewRefId: input.viewRefId })
       .exec();
-    if (!result) {
-      throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
-    }
-    return result.toObject() as View;
+    
+    return result ? result.toObject() as View : null;
   }
 
   public async insertMemberView(input: ViewInput): Promise<View> {

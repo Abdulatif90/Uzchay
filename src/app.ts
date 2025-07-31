@@ -35,7 +35,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
 app.use(cors({credentials: true, origin: true})); // CORS ni o'rnatish
-app.use(morgan(MORGAN_FORMAT));
+// app.use(morgan(MORGAN_FORMAT)); // Temporarily disabled to reduce logging
 /** 2-Sessions **/
 
 app.use(

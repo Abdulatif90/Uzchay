@@ -47,7 +47,7 @@ public async getRestaurant():Promise <Member>{
             const member = await this.memberModel
                 .findOne(
                     {memberNick:input.memberNick, memberStatus: {$ne: MemberStatus.DELETE}}, //
-                    {memberNick: 1,memberPassword:1, memberStatus:1}
+                    {memberNick: 1,memberPassword:1, memberStatus:1, memberType: 1}
                 )
                 .exec();
              console.log("processLogin - member:", member);       
@@ -63,7 +63,7 @@ public async getRestaurant():Promise <Member>{
                 throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PASSWORD);
             }
             member.memberPassword = "";
-            if (member.memberType !== 'USER') {
+            if (member.memberType !== MemberType.USER) {
                 throw new Errors(HttpCode.UNAUTHORIZED, Message.UNAUTHORIZED_ACCESS);
             }
             const memberId = await this.memberModel

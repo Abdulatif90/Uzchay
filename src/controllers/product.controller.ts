@@ -16,23 +16,26 @@ const productController:T = {};
  productController.getProducts = async (req: Request, res:Response) => {
     try{
         console.log("getProducts");       
+        console.log("Query params:", req.query);
         const {page, limit, order, productCollection, search} = req.query;
+        
         const inquiry: ProductInquiry = {
-            order: String(order),
-            page: Number(page),
-            limit: Number(limit),
+            order: String(order || "createdAt"),
+            page: Number(page) || 1,
+            limit: Number(limit) || 8,
         };
+        
         if(productCollection) inquiry.productCollection = productCollection as ProductCollection;
-
         if(search) inquiry.search = String(search);
 
+        console.log("Final inquiry:", inquiry);
         const result = await productService.getProducts(inquiry)
 
         res.status(HttpCode.OK).json(result)
     } catch(err){
         console.log("ERROR, getProducts", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart )
+        else res.status(Errors.standard.code).json(Errors.standard )
         // res.json({})
         
     }
@@ -44,7 +47,17 @@ const productController:T = {};
     try{
         console.log("getProduct");       
         const {id} = req.params;
-        console.log(req.member)
+        console.log("Product ID received:", id);
+        console.log("Member info:", req.member);
+        
+        // Validate ID format first
+        if (!id || id.length !== 24) {
+            return res.status(HttpCode.BAD_REQUEST).json({
+                code: HttpCode.BAD_REQUEST,
+                message: "Invalid product ID format"
+            });
+        }
+        
         const memberId = req.member?._id ? shapeIntoMongooseObjectId(req.member._id) : null;
         const result = await productService.getProduct(memberId, id)
         res.status(HttpCode.OK).json(result)
@@ -52,7 +65,7 @@ const productController:T = {};
     } catch(err){
         console.log("ERROR, getProduct", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart )
+        else res.status(Errors.standard.code).json(Errors.standard )
     }
  }
 
@@ -73,7 +86,7 @@ productController.getAllProducts = async (req: Request, res: Response) => {
         if (err instanceof Errors) {
             res.status(err.code).json({ message: err.message });
         }else {
-            res.status(Errors.standart.code).json({ message: Errors.standart });
+            res.status(Errors.standard.code).json({ message: Errors.standard });
         }
     }
 };
@@ -83,24 +96,38 @@ productController.getAllProducts = async (req: Request, res: Response) => {
 productController.createProduct = async (req: AdminRequest, res: Response) => {
     try{
         console.log('createProduct', req.body);
-        console.log(req.files);
-        if(!req.files?.length) 
-        throw new Errors(HttpCode.INTERNAL_SERVER_ERROR, Message.CREATE_FAILED)
+        console.log('req.files:', req.files);
         
        const data: ProductInput = req.body;
-       data.productImages = req.files?.map((ele) =>{
-        return ele.path.replace(/\\/g,"/")
-       }); 
        
-       console.log(data)
+       // Handle file uploads - only set if files exist
+       if(req.files && req.files.length > 0) {
+           data.productImages = req.files.map((ele: any) => {
+               return ele.path.replace(/\\/g,"/");
+           }); 
+       } else {
+           data.productImages = []; // Set empty array if no files
+       }
+       
+       // Set required fields with defaults if not provided
+       if (!data.productLeftCount) {
+           data.productLeftCount = 0;
+       }
+       
+       // productCount is required by schema but missing from form
+       if (!data.productCount) {
+           data.productCount = data.productLeftCount || 0;
+       }
+       
+       console.log('Final data:', data);
        await productService.createProduct(data);
 
-        res.send(`<script>alert("successfully created new product");window.location.replace('admin/product/all')</script>`)
+        res.send(`<script>alert("successfully created new product");window.location.replace('/admin/product/all')</script>`)
    
     }catch(err){
         console.log('createProduct error', err);
         const message = err instanceof Errors? err.message : Message.SOMETHING_WENT_WRONG;
-        res.status(200).send(`<script>alert('${message}');window.location.replace('/admin/signup')</script>`);
+        res.status(200).send(`<script>alert('${message}');window.location.replace('/admin/product/all')</script>`);
     }
 };
 
@@ -117,7 +144,7 @@ productController.updateProduct = async (req: Request, res: Response) => {
         if (err instanceof Errors) {
             res.status(err.code).json({ message: err.message });
         }else {
-            res.status(Errors.standart.code).json({ message: Errors.standart });
+            res.status(Errors.standard.code).json({ message: Errors.standard });
         }
     }
 };

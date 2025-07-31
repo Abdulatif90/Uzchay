@@ -37,6 +37,7 @@ export interface ProductInquiry {
         productCollection : ProductCollection,
         productName: String,
         productPrice: Number,
+        productCount?: Number,
         productLeftCount?: Number,
         productSize?: ProductSize,
         productVolume?: Number,

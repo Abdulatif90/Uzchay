@@ -26,7 +26,7 @@ memberController.getRestaurant = async (req:Request, res:Response) => {
     } catch(err){
         console.log("ERROR, getRestaurant", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart)
+        else res.status(Errors.standard.code).json(Errors.standard)
         // res.json({})
         
     }
@@ -47,7 +47,7 @@ memberController.getRestaurant = async (req:Request, res:Response) => {
         console.log("Error, signup", err);
     if(err instanceof Errors) 
         res.status(err.code).json({message: err.message});
-    else res.status(Errors.standart.code).json(Errors.standart.message);
+    else res.status(Errors.standard.code).json(Errors.standard.message);
     };
 };
 
@@ -76,7 +76,7 @@ memberController.logout = (req: ExtendedRequest, res:Response) =>{
         res.status(HttpCode.OK).json({ logout: true })
     } catch(err){
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart )
+        else res.status(Errors.standard.code).json(Errors.standard )
     }
 };
 
@@ -90,7 +90,7 @@ memberController.getMemberDetail = async (req: ExtendedRequest, res:Response) =>
     } catch(err){
         console.log("Error, getMemberDetail:", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart)
+        else res.status(Errors.standard.code).json(Errors.standard)
     }
 }
 
@@ -106,7 +106,7 @@ memberController.updateMember = async (req: ExtendedRequest, res:Response ) => {
     } catch(err){
         console.log("Error, updateMember:", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart)
+        else res.status(Errors.standard.code).json(Errors.standard)
     }
 };
 
@@ -127,7 +127,7 @@ memberController.uploadMemberImage = async (req: ExtendedRequest, res: Response)
     } catch (err) {
         console.log("Error, uploadMemberImage:", err);
         if (err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart);
+        else res.status(Errors.standard.code).json(Errors.standard);
     }
 };
 
@@ -140,7 +140,7 @@ memberController.getTopUsers = async (req:Request, res: Response) => {
     } catch(err){
         console.log("Error, getTopUsers:", err);
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart)
+        else res.status(Errors.standard.code).json(Errors.standard)
     }
 }
 
@@ -155,7 +155,7 @@ try{
 } catch(err) {
     console.log("ERROR, verifyAuth", err)
         if( err instanceof Errors) res.status(err.code).json(err);
-        else res.status(Errors.standart.code).json(Errors.standart )
+        else res.status(Errors.standard.code).json(Errors.standard )
 }
 }
 
