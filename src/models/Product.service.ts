@@ -96,7 +96,6 @@ class ProductService {
             if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
             return result.toObject() as Product;
         } catch (err) {
-            console.error("Error in getProduct:", err);
             if (err instanceof Errors) {
                 throw err;
             }
@@ -122,7 +121,6 @@ class ProductService {
            
         }
         catch(err){
-           console.log("err in CreateProduct ", err)
             throw new Errors(HttpCode.BAD_REQUEST,Message.CREATE_FAILED)
         }
 
