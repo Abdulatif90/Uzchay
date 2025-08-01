@@ -44,12 +44,21 @@ restaurantController.getLogin = (req: Request, res: Response) => {
         console.log("processSignup - request body:", req.body);
         const file = req.file;
         console.log("processSignup - file:", file);
-         // Check if file is provided
-        if(!file)
-            throw new Errors(HttpCode.BAD_REQUEST, Message.SOMETHING_WENT_WRONG);
-
+        
+        // Validate required fields first
         const newMember: MemberInput = req.body;
-        newMember.memberImage = file?.path;
+        
+        if (!newMember.memberNick || !newMember.memberPhone || !newMember.memberPassword) {
+            return res.status(HttpCode.BAD_REQUEST).json({
+                message: "Missing required fields: memberNick, memberPhone, or memberPassword"
+            });
+        }
+        
+        // Handle file upload (optional for admin)
+        if (file) {
+            newMember.memberImage = file.path.replace(/\\/g, "/");
+        }
+        
         newMember.memberType = MemberType.RESTARAUNT;
         const result = await memberService.processSignup(newMember); 
         

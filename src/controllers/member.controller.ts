@@ -34,9 +34,26 @@ memberController.getRestaurant = async (req:Request, res:Response) => {
 
   memberController.signup = async (req: Request, res: Response)=>{
     try {
-        const input: MemberInput = req.body,
-        result: Member = await memberService.signup(input),
-        token = await authService.createToken(result);
+        console.log("Signup request body:", req.body);
+        console.log("Signup request file:", req.file);
+        
+        const input: MemberInput = req.body;
+        
+        // Handle file upload
+        if (req.file) {
+            input.memberImage = req.file.path.replace(/\\/g, "/");
+        }
+        
+        // Validate required fields
+        if (!input.memberNick || !input.memberPhone || !input.memberPassword) {
+            return res.status(HttpCode.BAD_REQUEST).json({
+                message: "Missing required fields: memberNick, memberPhone, or memberPassword"
+            });
+        }
+        
+        const result: Member = await memberService.signup(input);
+        const token = await authService.createToken(result);
+        
         res.cookie("accessToken", token, {
             maxAge: AUTH_TIMER * 3600 * 1000,
             httpOnly: false,

@@ -27,6 +27,11 @@ public async getRestaurant():Promise <Member>{
 
     public async signup(input: MemberInput): Promise<Member> {
 
+        // Validate required fields
+        if (!input.memberPassword) {
+            throw new Errors(HttpCode.BAD_REQUEST, Message.NO_DATA_FOUND);
+        }
+
         const salt = await bcrypt.genSalt(10);
         input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
 
@@ -139,6 +144,11 @@ public async addUserPoint(member: Member, point: number): Promise<Member> {
         
         if (exist) {
             throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
+        }
+
+        // Validate required fields
+        if (!input.memberPassword) {
+            throw new Errors(HttpCode.BAD_REQUEST, Message.NO_DATA_FOUND);
         }
 
         const salt = await bcrypt.genSalt(10);
