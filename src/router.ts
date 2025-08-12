@@ -13,12 +13,12 @@ router.post("/member/signup",
 router.post("/member/logout", memberController.verifyAuth, memberController.logout);
 router.get("/member/detail",memberController.verifyAuth, memberController.getMemberDetail);
 router.post("/member/upload", 
-    makeUpLoader("members").single("file"), 
+    makeUpLoader("members").single("memberImage"), 
     memberController.verifyAuth, 
     memberController.uploadMemberImage
 );
 router.post("/member/update", 
-    makeUpLoader("members").single("file"),
+    makeUpLoader("members").single("memberImage"),
     memberController.verifyAuth,
     memberController.updateMember
 );

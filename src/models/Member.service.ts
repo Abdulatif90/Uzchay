@@ -92,6 +92,13 @@ public async getRestaurant():Promise <Member>{
 
     public async updateMember(member:Member, input:MemberInput):Promise <Member>{
         const memberId = shapeIntoMongooseObjectId(member._id);
+        
+        // Hash password if provided
+        if (input.memberPassword) {
+            const salt = await bcrypt.genSalt(10);
+            input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
+        }
+        
         const result = await this.memberModel.
             findOneAndUpdate({_id :  memberId},input, {new :true})
             .exec();
@@ -219,9 +226,9 @@ public async getUsers(): Promise<Member[]>{
         data.memberPassword = data.memberPassword ? await bcrypt.hash(data.memberPassword, salt) : undefined;
         const id= shapeIntoMongooseObjectId(data._id)    
         const result =  await this.memberModel
-        .findByIdAndUpdate({_id: id}, data, { new: true})
+        .findByIdAndUpdate(id, data, { new: true})
         .exec();
-        if(!result||result===data) throw new Errors(HttpCode.NOT_MODIFIED,Message.UPDATE_FAILED)
+        if(!result) throw new Errors(HttpCode.NOT_MODIFIED,Message.UPDATE_FAILED)
         
     return result.toObject()
        

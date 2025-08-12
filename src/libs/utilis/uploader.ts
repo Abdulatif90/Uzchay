@@ -23,6 +23,20 @@ const makeUpLoader = (address:string) => {
     return multer({storage:storage});
 };
 
+// Optional uploader that handles both JSON and multipart data
+const makeOptionalUpLoader = (address: string) => {
+    const upload = makeUpLoader(address).single('memberImage');
+    return (req: any, res: any, next: any) => {
+        // Check if request is multipart/form-data
+        if (req.is('multipart/form-data')) {
+            upload(req, res, next);
+        } else {
+            // Skip multer for JSON requests
+            next();
+        }
+    };
+};
+
 /*
 // bu specific hollar uchun
 const product_storage = multer.diskStorage({
@@ -40,3 +54,4 @@ const product_storage = multer.diskStorage({
 
 
 export default makeUpLoader;
+export { makeOptionalUpLoader };

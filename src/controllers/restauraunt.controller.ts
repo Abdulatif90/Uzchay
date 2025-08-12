@@ -122,8 +122,8 @@ restaurantController.logout = async (req: AdminRequest, res: Response) => {
             console.error("Session destroy error:", err);
             return res.status(500).json({ message: "Session destroy error" });
         }
-        res.status(200).json({ message: "Logout successful" });
-    });
+        res.redirect("/admin/");
+        });
     } catch (err: any) {    
         console.error("Error in logout:", err);
         res.status(err.code || 500).json({
@@ -149,12 +149,34 @@ restaurantController.getUsers = async (req: Request, res: Response) => {
 
 restaurantController.updateChosenUser = async (req: Request, res: Response) => {
     try{
-    const result = await memberService.updateChosenUser(req.body);
+    const input = req.body;
+    
+    // Handle file upload for member image
+    if (req.file) {
+        console.log("File uploaded for user update:", req.file.path);
+        input.memberImage = req.file.path.replace(/\\/g, "/");
+    }
+    
+    const result = await memberService.updateChosenUser(input);
     console.log('updateChosenUser result:', result);
     res.status(200).json({data: result});   
      }
-    catch(err){
+    catch(err: any){
         console.log('err in updateUser ', err)
+        
+        // Handle multer errors specifically
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(400).json({
+                message: "File size too large. Maximum size is 5MB."
+            });
+        }
+        
+        if (err.message && err.message.includes('Only image files')) {
+            return res.status(400).json({
+                message: err.message
+            });
+        }
+        
         if (err instanceof Errors) {
             res.status(err.code).json({ message: err.message });
         }else {

@@ -115,13 +115,39 @@ memberController.getMemberDetail = async (req: ExtendedRequest, res:Response) =>
 memberController.updateMember = async (req: ExtendedRequest, res:Response ) => {
     try{
         console.log("updateMember")
+        console.log("Request body:", req.body);
+        console.log("Request file:", req.file);
+        
         const input: MemberInput = req.body;
-        if(req.file) input.memberImage = req.file.path.replace(/\\/, "/");
+        
+        if(req.file) {
+            console.log("File uploaded:", req.file.path);
+            input.memberImage = req.file.path.replace(/\\/g, "/");
+        }
+        
         const result = await memberService.updateMember(req.member, input);
-
+        
+        console.log("Update successful:", result);
         res.status(HttpCode.OK).json(result) 
-    } catch(err){
+        
+    } catch(err: any) {   
         console.log("Error, updateMember:", err);
+        
+        // Handle multer errors specifically
+        if (err.code === 'LIMIT_FILE_SIZE') {
+            return res.status(HttpCode.BAD_REQUEST).json({
+                code: HttpCode.BAD_REQUEST,
+                message: "File size too large. Maximum size is 5MB."
+            });
+        }
+        
+        if (err.message && err.message.includes('Only image files')) {
+            return res.status(HttpCode.BAD_REQUEST).json({
+                code: HttpCode.BAD_REQUEST,
+                message: err.message
+            });
+        }
+        
         if( err instanceof Errors) res.status(err.code).json(err);
         else res.status(Errors.standard.code).json(Errors.standard)
     }

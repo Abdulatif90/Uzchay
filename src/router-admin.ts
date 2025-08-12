@@ -44,6 +44,7 @@ routerAdmin
 
   .post('/user/edit',
     restaurauntController.veryfyRestaurant,
+    makeUpLoader('members').single('memberImage'),
     restaurauntController.updateChosenUser
   )
 
