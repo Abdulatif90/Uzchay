@@ -205,11 +205,12 @@ public async addUserPoint(member: Member, point: number): Promise<Member> {
 
 public async getUsers(): Promise<Member[]>{
      try {
-        
-        const result = (await this.memberModel
+            const result = (await this.memberModel
             .find({memberType:MemberType.USER})
-            .lean());
-        
+            .exec()
+           
+        );
+        console.log("getUsers - result:", result);
         if(!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_MEMBER_FOUND)
         return result as Member[]
     }

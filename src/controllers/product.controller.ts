@@ -33,7 +33,6 @@ const productController:T = {};
         if( err instanceof Errors) res.status(err.code).json(err);
         else res.status(Errors.standard.code).json(Errors.standard )
     }
-    
  }
 
   productController.getProduct = async (req: ExtendedRequest, res:Response) => {
@@ -138,4 +137,35 @@ productController.updateProduct = async (req: Request, res: Response) => {
         }
     }
 };
-export default  productController; 
+
+productController.deleteProduct = async (req: Request, res: Response) => {
+    try {
+        console.log("deleteProduct");
+        const { id } = req.params;
+        const result = await productService.deleteProduct(id);
+        res.status(200).json({ data: result });
+    } catch (err) {
+        console.log("Error, deleteProduct:", err);
+        const message = err instanceof Errors? err.message : Message.SOMETHING_WENT_WRONG;
+        res.status(400).json({ message: {message} });
+    }
+};
+
+productController.deleteAllDeletedProducts = async (req: Request, res: Response) => {
+    try {
+        console.log("deleteAllDeletedProducts");
+        const result = await productService.deleteAllDeletedProducts();
+        res.status(200).json({ 
+            message: `${result} deleted products removed from database`,
+            deletedCount: result 
+        });
+    } catch (err ) {
+        if (err instanceof Errors) {
+            res.status(err.code).json({ message: err.message });
+        }else {
+            res.status(Errors.standard.code).json({ message: Errors.standard });
+        }
+    }
+};
+
+export default  productController;

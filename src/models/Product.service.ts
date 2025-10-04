@@ -138,6 +138,22 @@ class ProductService {
     return result.toObject()
        
     }  
+
+    public async deleteProduct(id: string): Promise<Product> {
+        const productId = shapeIntoMongooseObjectId(id);
+        const result = await this.productModel
+            .findByIdAndDelete(productId)
+            .exec();
+        if (!result) throw new Errors(HttpCode.NOT_MODIFIED, Message.DELETE_FAILED);
+        return result.toObject();
+    }
+
+    public async deleteAllDeletedProducts(): Promise<number> {
+        const result = await this.productModel
+            .deleteMany({ productStatus: ProductStatus.DELETE })
+            .exec();
+        return result.deletedCount || 0;
+    }
 };
  
    

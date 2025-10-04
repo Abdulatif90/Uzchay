@@ -33,7 +33,8 @@ export enum Message {
   MEMBER_SIGNUP_SUCCESS = "Member signed up successfully!",
   MEMBER_LOGIN_SUCCESS = "Member logged in successfully!",
   MEMBER_LOGOUT_SUCCESS = "Member logged out successfully!",
-  MEMBER_SESSION_SAVED = "Member session saved successfully!",      
+  MEMBER_SESSION_SAVED = "Member session saved successfully!", 
+  DELETE_FAILED = "Delete is failed!",    
     
 }
 

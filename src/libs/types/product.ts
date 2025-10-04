@@ -13,7 +13,7 @@ import {
         productPrice: Number,
         productCount: Number,
         productLeftCount?: Number,
-        productSize: ProductSize,
+        productSize?: ProductSize,
         productVolume: Number,
         productDesc?: String,
         productImages: String[],
@@ -40,7 +40,7 @@ export interface ProductInquiry {
         productCount?: Number,
         productLeftCount?: Number,
         productSize?: ProductSize,
-        productVolume?: Number,
+        productVolume?: Number | null,
         productDesc?: String,
         productImages?: String[],
         productviews?: Number

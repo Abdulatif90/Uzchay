@@ -51,7 +51,6 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  console.log("Session data:", req.session); // Log the session data
   const sessionData = req.session as T ; // req.session ni T ga o'zgartirish
   res.locals.member = sessionData.member; // res.locals ga sessionData ni o'zgartirish
   next();

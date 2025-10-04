@@ -29,10 +29,17 @@ routerAdmin
     makeUpLoader('products').array('productImages',5),
     productController.createProduct)
 
-
   .post("/product/:id",
     restaurauntController.veryfyRestaurant,
     productController.updateProduct)
+
+  .delete("/product/:id",
+    restaurauntController.veryfyRestaurant,
+    productController.deleteProduct)
+
+  .delete("/product/delete-all/deleted",
+    restaurauntController.veryfyRestaurant,
+    productController.deleteAllDeletedProducts)
 
      /** User */
 

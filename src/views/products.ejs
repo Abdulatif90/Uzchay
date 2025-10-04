@@ -41,6 +41,7 @@
                 <th scope="col">Product Price</th>
                 <th scope="col">Product Left Count</th>
                 <th scope="col">Status</th>
+                <th scope="col">Actions</th>
               </tr>
             </thead>
             <!--  LOOP PRODUCTS: START  -->
@@ -48,7 +49,7 @@
               <tbody style="background: white">
                 <td><%= key + 1 %></td>
                 <td><%= value.productName %></td>
-                <td><%= value.productName %></td>
+                <td><%= value.productCollection %></td>
                 <td><%= value.productCollection === "DRINK" ? value.productVolume :
                  value.productSize %></td>
                 <td><%= value.productPrice %></td>
@@ -62,6 +63,18 @@
                     <option value="DELETE" <%= value.productStatus === "DELETE" ? "selected": "" %> > DELETE</option>
                   </select>
                 </td>
+                <td>
+                  <button class="btn btn-sm btn-warning edit-product-btn" 
+                          data-id="<%= value._id %>"
+                          style="margin-right: 5px;">
+                    Edit
+                  </button>
+                  <button class="btn btn-sm btn-danger delete-product-btn" 
+                          data-id="<%= value._id %>"
+                          onclick="return confirm('Are you sure to delete this product?')">
+                    Delete
+                  </button>
+                </td>
               </tbody>
               <% })
               %>
@@ -74,8 +87,13 @@
             <button class="btn btn-primary" id="process-btn">
               New Product
             </button>
+            <button class="btn btn-danger" id="delete-all-btn" style="margin-left: 10px;">
+              Delete All Deleted Products
+            </button>
           </div>
         </div>
+
+        <!-- NEW PRODUCT FORM -->
         <form 
           onsubmit=" return validateForm() "
           action="/admin/product/create"
@@ -148,11 +166,12 @@
             <div class="half-input" id="product-volume" style="display: none">
               <label>Drink Volume</label>
               <select class="product-volume" name="productVolume">
-                <option value="0.5">0,5 liters</option>
-                <option value="1" selected>1 liters</option>
-                <option value="1.2">1,2 liters</option>
-                <option value="1.5">1,5 liters</option>
-                <option value="2">2 liters</option>
+                <option value=" " > </option>
+                <option value="0.5">0,5 </option>
+                <option value="1" selected>1 </option>
+                <option value="1.2">1,2 </option>
+                <option value="1.5">1,5 </option>
+                <option value="2">2 </option>
               </select>
             </div>
           </div>
@@ -230,6 +249,76 @@
             </button>
           </div>
         </form>
+
+        <!-- EDIT PRODUCT FORM -->
+        <div class="edit-dish-container" style="display: none;">
+          <div class="long-input" style="display: flex; align-items: center">
+            <span class="new-dish-txt">EDIT PRODUCT DETAIL</span>
+          </div>
+          <form id="edit-product-form">
+            <input type="hidden" id="edit-product-id">
+            <div class="login-input-frame">
+              <div class="long-input">
+                <label>Product Name</label>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  id="edit-product-name"
+                  class="edit-product-name"
+                />
+              </div>
+            </div>
+            <div class="half-input-frame">
+              <div class="half-input">
+                <label>Product Price</label>
+                <input
+                  type="number"
+                  placeholder="Price"
+                  id="edit-product-price"
+                  class="edit-product-price"
+                />
+              </div>
+              <div class="half-input">
+                <label>Product Left Counts</label>
+                <input
+                  type="number"
+                  placeholder="Counts"
+                  id="edit-product-left-count"
+                  class="edit-product-left-count"
+                />
+              </div>
+            </div>
+            <div class="half-input-frame">
+              <div class="half-input">
+                <label>Product Type</label>
+                <select class="edit-product-collection" id="edit-product-collection">
+                  <option value="DISH">Dish</option>
+                  <option value="SALAD">Salad</option>
+                  <option value="DESSERT">Dessert</option>
+                  <option value="DRINK">Drink</option>
+                  <option value="OTHER">Other</option>
+                </select>
+              </div>
+              <div class="half-input">
+                <label>Product Size</label>
+                <select class="edit-product-size" id="edit-product-size">
+                  <option value="SMALL">Small</option>
+                  <option value="NORMAL">Normal</option>
+                  <option value="LARGE">Large</option>
+                  <option value="SET">Set</option>
+                </select>
+              </div>
+            </div>
+            <div class="long-input">
+              <label>Product Description</label>
+              <textarea id="edit-product-desc" class="edit-product-desc"></textarea>
+            </div>
+            <div class="operation-buttons">
+              <button type="button" class="btn btn-danger" id="edit-cancel-btn">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="edit-save-btn">Save</button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
