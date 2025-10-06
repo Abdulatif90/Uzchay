@@ -39,10 +39,10 @@ memberController.getRestaurant = async (req:Request, res:Response) => {
         
         const input: MemberInput = req.body;
         
-        // Handle file upload
-        if (req.file) {
-            input.memberImage = req.file.path.replace(/\\/g, "/");
-        }
+        // // Handle file upload
+        // if (req.file) {
+        //     input.memberImage = req.file.path.replace(/\\/g, "/");
+        // }
         
         // Validate required fields
         if (!input.memberNick || !input.memberPhone || !input.memberPassword) {

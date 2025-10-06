@@ -100,7 +100,7 @@ public async getRestaurant():Promise <Member>{
         }
         
         const result = await this.memberModel.
-            findOneAndUpdate({_id :  memberId},input, {new :true})
+            findOneAndUpdate({_id :  memberId}, input, {new :true})
             .exec();
         if(!result)
             throw new Errors(HttpCode.NOT_MODIFIED, Message.UPDATE_FAILED);

@@ -50,6 +50,8 @@ export interface UpdateMemberInput {
 export interface LoginInput{
     memberNick: string;
     memberPassword: string;
+    memberPhone?: string;
+    memberImage?: string;
 } 
 
 export interface AdminRequest extends Request {
