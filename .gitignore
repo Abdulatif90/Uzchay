@@ -14,4 +14,8 @@ notes.txt
 *.tmp
 *.zip
 *.tar.gz
-.env.production        
+.env.production     
+deploy.sh   
+
+process.config.js
+extra.js
