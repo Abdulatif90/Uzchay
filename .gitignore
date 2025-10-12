@@ -13,4 +13,5 @@ notes.txt
 *.bak
 *.tmp
 *.zip
-*.tar.gz        
+*.tar.gz
+.env.production        
