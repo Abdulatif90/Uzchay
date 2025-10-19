@@ -7,10 +7,10 @@ import Errors, { HttpCode, Message } from "../libs/Errors";
 class AuthService {
     private readonly secretToken;
     constructor() {
-        this.secretToken = process.env.JWT_SECRET as string;
+        this.secretToken = process.env.SECRET_TOKEN as string;
         if (!this.secretToken) {
-            console.error("JWT_SECRET not found in environment variables");
-            throw new Error("JWT_SECRET is required");
+            console.error("SECRET_TOKEN not found in environment variables");
+            throw new Error("SECRET_TOKEN is required");
         }
     }
 
