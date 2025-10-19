@@ -1,5 +1,3 @@
-import dotenv  from 'dotenv';
-dotenv.config();
 import { token } from "morgan";
 import { AUTH_TIMER } from "../libs/config";
 import { Member } from "../libs/types/member";

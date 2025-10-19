@@ -10,6 +10,8 @@ dotenv.config({
     ? ".env.production"
     : ".env" 
 });
+console.log("NODE_ENV:", process.env.NODE_ENV);
+console.log("SECRET_TOKEN:", process.env.SECRET_TOKEN ? "Loaded" : "NOT loaded");
 mongoose
   .connect(process.env.MONGO_URL as string, {})
   .then((data) => {
