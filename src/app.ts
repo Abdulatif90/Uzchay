@@ -11,7 +11,9 @@ import session from "express-session";
 import connectMongoDB from "connect-mongodb-session";
 import cookieParser from "cookie-parser";
 import { T } from "./libs/types/common";
-  
+import {Server as SocketIOServer} from "socket.io";
+import http from "http";
+
 const app = express()
 
 const MongoDBStore = connectMongoDB(session); // MongoDB ga saqlash uchun
@@ -62,4 +64,23 @@ app.set("view engine", "ejs");
 app.use("/admin", routerAdmin); // BSSR: EJS
 app.use("/", router); // SPA: React
 
-export default app; // same as module exports in common js
+const server = http.createServer(app);
+const io = new SocketIOServer(server, {
+  cors: {
+    origin: "*",
+    credentials: true,
+    }
+});
+
+let clientsCount = 0;
+io.on("connection", (socket) => {
+  clientsCount++;
+  console.log("Ulangan mijozlar soni: ", clientsCount);
+  console.log("Yangi foydalanuvchi ulandi: ", socket.id);
+  socket.on("disconnect", () => {
+    clientsCount--;
+    console.log("Mijoz uzildi. Hozir ulangan mijozlar soni: ", clientsCount);
+  });
+});
+
+export default server; 
