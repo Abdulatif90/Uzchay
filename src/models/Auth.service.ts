@@ -1,8 +1,11 @@
+import dotenv  from 'dotenv';
+dotenv.config();
 import { token } from "morgan";
 import { AUTH_TIMER } from "../libs/config";
 import { Member } from "../libs/types/member";
 import jwt from "jsonwebtoken";
 import Errors, { HttpCode, Message } from "../libs/Errors";
+
 
 class AuthService {
     private readonly secretToken;
