@@ -1,4 +1,3 @@
-import { token } from "morgan";
 import { AUTH_TIMER } from "../libs/config";
 import { Member } from "../libs/types/member";
 import jwt from "jsonwebtoken";
@@ -7,6 +6,7 @@ import Errors, { HttpCode, Message } from "../libs/Errors";
 
 class AuthService {
     private readonly secretToken;
+
     constructor() {
         this.secretToken = process.env.SECRET_TOKEN as string || "";
         if (!this.secretToken) {
