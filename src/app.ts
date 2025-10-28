@@ -36,7 +36,11 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
-app.use(cors({credentials: true, origin: true})); // CORS ni o'rnatish
+app.use(cors({
+  credentials: true, 
+  origin: "http://31.97.70.220:3000",
+  methods: ["GET", "POST"],  
+})); // CORS ni o'rnatish
 // app.use(morgan(MORGAN_FORMAT)); // Temporarily disabled to reduce logging
 /** 2-Sessions **/
 
