@@ -38,8 +38,7 @@ app.use(cookieParser());
 app.use("/uploads", express.static("./uploads"));
 app.use(cors({
   credentials: true, 
-  origin: "http://31.97.70.220:3000",
-  methods: ["GET", "POST"],  
+  origin: true,
 })); // CORS ni o'rnatish
 // app.use(morgan(MORGAN_FORMAT)); // Temporarily disabled to reduce logging
 /** 2-Sessions **/
@@ -71,7 +70,7 @@ app.use("/", router); // SPA: React
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: "*",
+    origin: ["http://uzchay.uz", "https://uzchay.uz"],
     credentials: true,
     }
 });
