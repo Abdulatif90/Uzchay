@@ -32,6 +32,16 @@ public async getRestaurant():Promise <Member>{
             throw new Errors(HttpCode.BAD_REQUEST, Message.NO_DATA_FOUND);
         }
 
+            // Check for duplicate phone or nick before creating
+            const existPhone = await this.memberModel.findOne({ memberPhone: input.memberPhone }).exec();
+            if (existPhone) {
+                throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE);
+            }
+            const existNick = await this.memberModel.findOne({ memberNick: input.memberNick }).exec();
+            if (existNick) {
+                throw new Errors(HttpCode.BAD_REQUEST, Message.USED_NICK_PHONE);
+            }
+
         const salt = await bcrypt.genSalt(10);
         input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
 
