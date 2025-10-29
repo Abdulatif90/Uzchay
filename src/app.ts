@@ -70,8 +70,9 @@ app.use("/", router); // SPA: React
 const server = http.createServer(app);
 const io = new SocketIOServer(server, {
   cors: {
-    origin: "http://31.97.70.220:3000",
-    credentials: true,
+    origin: ["http://31.97.70.220:3000","http://uzchay.uz"],
+    methods: ["GET", "POST"],
+         credentials: true,
     }
 });
 
