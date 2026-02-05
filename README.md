@@ -1,4 +1,4 @@
-  Uzchay Backend – Restaurant Platform
+  Uzchay Backend – Restaurant Platform uzchay.uz
 
   Project Overview
 Uzchay Backend is the server-side application for the  Uzchay Restaurant platform , handling:
