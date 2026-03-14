@@ -1,24 +1,31 @@
 import express from "express";
-const routerAdmin = express.Router();
+
 import restaurauntController from "./controllers/restauraunt.controller";
 import productController from "./controllers/product.controller";
 import makeUpLoader  from "./libs/utilis/uploader";
 
+const routerAdmin = express.Router();
+
 /** Restaurant */
+
 routerAdmin.get("/", restaurauntController.goHome);
+
 routerAdmin
   .get("/login", restaurauntController.getLogin)
   .post("/login", restaurauntController.processLogin);
+
 routerAdmin
   .get("/signup", restaurauntController.getSignup)
   .post("/signup", 
     makeUpLoader('members').single('memberImage'),
     restaurauntController.processSignup);
+
 routerAdmin
   .get("/checkme", restaurauntController.checkAuthSession)
   .get("/logout", restaurauntController.logout);
 
 /** Product */
+
 routerAdmin
   .get("/product/all",
      restaurauntController.veryfyRestaurant,
@@ -44,6 +51,7 @@ routerAdmin
      /** User */
 
   routerAdmin
+    
   .get('/user/all',
     restaurauntController.veryfyRestaurant,
     restaurauntController.getUsers
