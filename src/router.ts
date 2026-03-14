@@ -1,10 +1,10 @@
 import express from "express";
-const router = express.Router();
-import memberController from "./controllers/member.controller";
 import makeUpLoader from "./libs/utilis/uploader";
+import memberController from "./controllers/member.controller";
 import productController from "./controllers/product.controller";
 import orderController from "./controllers/order.controller";
 
+const router = express.Router();
 router.get("/member/restaurant", memberController.getRestaurant);
 router.post("/member/login", memberController.login);
 router.post("/member/signup", 
